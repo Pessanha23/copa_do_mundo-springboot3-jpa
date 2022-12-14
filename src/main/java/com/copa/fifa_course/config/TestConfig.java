@@ -1,4 +1,4 @@
-package com.copa.fifa_course;
+package com.copa.fifa_course.config;
 
 import com.copa.fifa_course.entities.Selecao;
 import com.copa.fifa_course.repository.SelecaoRepository;

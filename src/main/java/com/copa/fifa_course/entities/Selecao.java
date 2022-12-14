@@ -3,10 +3,11 @@ package com.copa.fifa_course.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Objects;
 @Entity
 @Table(name = "tb_selecao")
-public class Selecao implements Serializable {
+public class Selecao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -58,4 +59,5 @@ public class Selecao implements Serializable {
     public int hashCode() {
         return Objects.hash(id);
     }
+
 }

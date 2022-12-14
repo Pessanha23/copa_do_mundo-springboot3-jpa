@@ -3,7 +3,11 @@ package com.copa.fifa_course.service;
 import com.copa.fifa_course.entities.Selecao;
 import com.copa.fifa_course.repository.SelecaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+
+import java.util.ArrayList;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +19,7 @@ public class SelecaoService {
     private SelecaoRepository repository;
 
     public List<Selecao> findAll() {
-        return repository.findAll();
+        return repository.findAll(Sort.by(Sort.Direction.DESC,"id"));
     }
 
     public Selecao findById(Long id) {
@@ -23,22 +27,12 @@ public class SelecaoService {
         return obj.get();
     }
 
-    public Selecao insert(Selecao obj) {
-        return repository.save(obj);
-    }
-
-    public void delete(Long id) {
-        repository.deleteById(id);
-    }
-
-    public Selecao update(Long id, Selecao obj) {
-        Selecao entity = repository.getReferenceById(id);
-        updateData(entity, obj);
-        return repository.save(entity);
-    }
-
-    private void updateData(Selecao entity, Selecao obj) {
-        entity.setContinente(obj.getContinente());
-        entity.setTime(obj.getTime());
+    public List<Selecao> insert(List<Selecao> selecoes) {
+        int totalbd = repository.findAll().size();
+        int quantity = totalbd + selecoes.size();
+            if (quantity <= 32) {
+                return repository.saveAll(selecoes);
+            }
+        throw new RuntimeException("NUMERO MAIOR QUE 32 SELECOES");
     }
 }

@@ -9,7 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.text.CollationElementIterator;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/selecoes")
@@ -31,22 +35,9 @@ public class SelecaoResource {
     }
 
     @PostMapping
-    public ResponseEntity<Selecao> insert(@RequestBody Selecao obj) {
-        obj = service.insert(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-        return ResponseEntity.created(uri).body(obj);
-    }
-
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Selecao> delete(@PathVariable Long id) {
-        service.delete(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PutMapping
-    public ResponseEntity<Selecao> update(@PathVariable Long id, @RequestBody Selecao obj) {
-        obj = service.update(id, obj);
-        return ResponseEntity.ok().body(obj);
+    public ResponseEntity<List<Selecao>> insert(@RequestBody List<Selecao> objetos) {
+        List<Selecao> result = service.insert(objetos);
+        return ResponseEntity.ok().body(result);
     }
 
 }
